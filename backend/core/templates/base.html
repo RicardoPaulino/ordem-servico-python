@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordem de Serviço</title>
+
+    <!-- Bootstrap 5.2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet">
+
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.3/dist/cdn.min.js" defer></script>
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+
+    <style>
+        /* Custom CSS to remove border from navbar-toggler */
+        .navbar-toggler {
+            border: none;
+            box-shadow: none; /* Remove shadow if any */
+        }
+        /* Remove outline on focus */
+        .navbar-toggler:focus, .navbar-toggler:active {
+            outline: none; /* Remove the outline when focused or active */
+            box-shadow: none; /* Remove any box-shadow on focus or active state */
+        }
+
+        /* Optional: Remove border when clicked */
+        .navbar-toggler:focus, .navbar-toggler:active {
+            border: none;
+        }
+        .dropdown-menu {
+            width: 300px; /* Ajuste a largura conforme necessário */
+            padding: 0;
+            overflow: hidden; /* Garante que o conteúdo não saia do dropdown */
+        }
+        .navbar-login {
+            padding: 1rem;
+        }
+        .navbar-login .icon-size {
+            font-size: 3rem; /* Ajuste o tamanho do ícone conforme necessário */
+        }
+        .navbar-login-session {
+            border-top: 1px solid #ddd;
+        }
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        .dropdown-menu .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        .dropdown-menu .col-lg-4,
+        .dropdown-menu .col-lg-8 {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .dropdown-menu .text-left {
+            text-align: left;
+        }
+        .dropdown-menu .dropdown-item {
+            white-space: nowrap; /* Evita quebra de linha dentro dos itens do dropdown */
+        }
+        .dropdown-menu .btn-block {
+            width: auto; /* Ajusta a largura dos botões dentro do dropdown */
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <!-- Botão Navbar Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Dropdown do Usuário -->
+            <div class="dropdown ms-auto">
+                <button class="btn btn-dark dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-light dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li>
+                        <div class="navbar-login">
+                            <div class="row no-gutters">
+                                <div class="col-lg-4 text-center">
+                                    <p>
+                                        <i class="fas fa-user icon-size"></i>
+                                    </p>
+                                </div>
+                                <div class="col-lg-8">
+                                    <p class="text-left"><strong>Ricardo Paulino do Nascimento</strong></p>
+                                    <p class="text-left">
+                                        <a href="#" class="btn btn-primary btn-block btn-sm">Atualizar Dados</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <div class="navbar-login navbar-login-session">
+                            <div class="row no-gutters">
+                                <div class="col-lg-12">
+                                    <p>
+                                        <a href="#" class="btn btn-danger btn-block">Sair</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Offcanvas Menu -->
+            <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Ordem Serviço</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Placeholder content block for template -->
+    <div class="container-fluid" style="margin-top: 60px;">
+        {% block content %}       
+        {% endblock content %}
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+
+
+</html>
