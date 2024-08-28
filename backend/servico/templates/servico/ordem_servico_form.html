@@ -1,0 +1,179 @@
+<!-- ordem_servico_form.html -->
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block css %}
+  <link
+    rel="stylesheet"
+    href="{% static 'css/autocomplete.css' %}"
+  >
+{% endblock css %}
+{% block content %}
+<div class="container">
+    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'servico:ordem_servico_list' %}">Ordens Serviço</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Adicionar Ordem de Serviço</li>
+    </ol>
+    </nav>
+
+     <div x-data="getData">
+    <h3>adicionar Ordem de Serviço</h3>
+    <hr/>
+
+    <form>
+{% comment %} 
+    <!-- busca cliente -->
+      <div class="form-group row autocomplete">
+        <label
+          for=""
+          class="col-sm-2 col-form-label"
+        >Cliente</label>
+        <div class="col-sm-10">
+        <!-- manual -->
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Cliente"
+            x-model="searchCliente"
+          >
+          <ul
+            id="id_ul"
+            x-show="clienteShow"
+          >
+            <template
+              x-for="cliente in clientes"
+              :key="cliente.id"
+            >
+              <li
+                x-text="cliente.razao_social"
+                @click="getCliente(cliente)"
+              ></li>
+            </template>
+          </ul>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label
+          for=""
+          class="col-sm-2 col-form-label"
+        >Situação</label>
+        <div class="col-sm-10">
+        <!-- widget_tweaks -->
+          {% render_field form.situacao class="form-control" x-model="ordemServico.situacao" %}
+        </div>
+      </div>
+
+      <p>Endereço: <span x-text="clienteSelecionado.endereco"></span></p>
+      <p>Bairro: <span x-text="clienteSelecionado.bairro"></span></p>
+
+    <!-- busca servico -->
+      <div class="form-group row autocomplete">
+        <label
+          for=""
+          class="col-sm-2 col-form-label"
+        >Serviço</label>
+        <div class="col-sm-10">
+        <!-- manual -->
+          <input
+            type="text"
+            class="form-control"
+            placeholder="servico"
+            x-model="searchServico"
+          >
+          <ul
+            id="id_ul"
+            x-show="servicoShow"
+          >
+            <template
+              x-for="servico in servicos"
+              :key="servico.id"
+            >
+              <li
+                x-text="servico.titulo"
+                @click="getServico(servico)"
+              ></li>
+            </template>
+          </ul>
+        </div>
+        <p x-text="searchServico"></p>
+      </div>
+
+    <!-- <p x-text="servicoSelecionado.id"></p> -->
+
+      <div class="form-group row">
+        <label
+          for=""
+          class="col-sm-2 col-form-label"
+        >Valor</label>
+        <div class="col-sm-10">
+          {% render_field form.valor class="form-control" min="0" step="0.01" x-model="ordemServicoItem.valor" %}
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label
+          for=""
+          class="col-sm-2 col-form-label"
+        >Próxima Visita</label>
+        <div class="col-sm-10">
+          {% render_field form.proxima_visita class="form-control" x-model="ordemServicoItem.proximaVisita" %}
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click="addItem"
+          >Adicionar</button>
+          <button
+            type="submit"
+            class="btn btn-success"
+          >Salvar</button>
+        </div>
+      </div> {% endcomment %}
+
+    </form>
+
+    <table class="table table-striped shadow table-hover mt-3 bg-white">
+        <thead class="thead-dark">
+        <tr>
+          <th>Descrição (Serviço)</th>
+          <th>Valor</th>
+          <th>Próx. Visita</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template
+          x-for="item in ordemServicoItems"
+          :key="item.id"
+        >
+          <tr>
+            <td x-text="item.servico_titulo"></td>
+            <td x-text="item.valor"></td>
+            <td x-text="item.proxima_visita"></td>
+            <td
+              class="text-primary"
+              @click="deleteOrdemServicoItem(item.id)"
+            >Deletar</td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block js %}
+  <script
+    src="{% static 'js/servico/servico.js' %}"
+    data-csrf="{{ csrf_token }}"
+  ></script>
+{% endblock js %}

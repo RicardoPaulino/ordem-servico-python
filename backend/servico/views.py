@@ -11,7 +11,9 @@ def ordem_servico_list(request):
 
     
 def ordem_servico_create(request):
-    ...
+    template_name = 'servico/ordem_servico_form.html'
+    return render(request, template_name)
+
 def ordem_servico_detail(request,pk):
     template_name = 'servico/ordem_servico_detail.html'
     instance = OrdemServico.objects.get(pk=pk)
