@@ -26,8 +26,8 @@ INSTALLED_APPS = [
     #'widget_tweaks',
     # my apps
     'backend.core',
-    # 'backend.crm',
-    # 'backend.servico',
+    'backend.crm',
+    'backend.servico',
 ]
 
 MIDDLEWARE = [

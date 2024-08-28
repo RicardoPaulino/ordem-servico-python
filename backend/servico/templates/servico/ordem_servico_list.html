@@ -1,0 +1,35 @@
+<!-- ordem_servico_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Ordens</li>
+    </ol>
+    </nav>
+
+    <h1>ordens de serviço</h1>
+    <hr/>
+     <table class="table table-striped shadow table-hover mt-5 bg-white">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Nº</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Situação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+            <tr>
+                <td>{{ object.pk }}</td>
+                <td><a href="{% url 'servico:ordem_servico_detail' object.pk %}">{{ object.cliente }}</a></td>
+                <td>{{ object.get_situacao_display }}</td>
+            </tr>
+            {% endfor %}        
+        </tbody>
+    </table>
+</div>
+
+{% endblock content %}

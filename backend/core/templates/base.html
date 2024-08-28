@@ -19,6 +19,9 @@
     <script src="https://unpkg.com/htmx.org@1.9.3"></script>
 
     <style>
+    body{
+        background-color: #d6d6d6;
+    }
         /* Custom CSS to remove border from navbar-toggler */
         .navbar-toggler {
             border: none;
@@ -69,7 +72,14 @@
         }
         .dropdown-menu .btn-block {
             width: auto; /* Ajusta a largura dos botões dentro do dropdown */
+        }        
+        a {
+            text-decoration: none;
         }
+        {% comment %} .table{
+            background-color:#ffffff;
+        } {% endcomment %}
+    </style>
     </style>
 </head>
 
@@ -104,9 +114,7 @@
                             </div>
                         </div>
                     </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                  
                     <li>
                         <div class="navbar-login navbar-login-session">
                             <div class="row no-gutters">
@@ -130,8 +138,12 @@
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
+                            <a class="nav-link active" aria-current="page" href="{% url 'core:index' %}">Home</a>
+                        </li> 
+                        <hr/>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'servico:ordem_servico_list' %}">Ordens de Serviço</a>
+                        </li> 
                         <li class="nav-item">
                             <a class="nav-link" href="#">Link</a>
                         </li>
